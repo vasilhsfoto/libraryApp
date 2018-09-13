@@ -1,0 +1,45 @@
+{
+  "name": "setting-up-tooling",
+  "version": "1.0.0",
+  "description": "Plurasright - setting up tooling module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "DEBUG=* nodemon app.js",
+    "lint": "eslint *.js"
+  },
+  "author": "Vassilis Fotopoulos",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.2.0",
+    "chalk": "^2.4.1",
+    "debug": "^3.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.15.2",
+    "jquery": "^3.3.1",
+    "morgan": "^1.9.0",
+    "popper.js": "^1.14.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "nodemon": "^1.18.4"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "app.js",
+      "views/index.html"
+    ],
+    "ignore": [
+      "public/*"
+    ],
+    "delay": "2500",
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": 4000,
+      "employee1": "Alex",
+      "employee2": "Vassilis"
+    }
+  }
+}
