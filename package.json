@@ -29,7 +29,7 @@
   "nodemonConfig": {
     "watch": [
       "app.js",
-      "views/index.html"
+      "./src"
     ],
     "ignore": [
       "public/*"
