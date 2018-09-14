@@ -3,14 +3,24 @@ const chalk = require('chalk');
 const debug = require('debug')('myapplication');
 const morgan = require('morgan');
 const path = require('path');
-const bookRoute = require('./src/routes/bookRoutes');
-// const bookRouter = require(path.join(__dirname, 'src', 'routes', 'bookRoute.js'));
-
 /**
  * Application instance
  */
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const nav = [
+  {
+    title: 'Books',
+    link: 'books'
+  },
+  {
+    title: 'Authors',
+    link: 'authors'
+  }
+];
+
+const bookRoute = require('./src/routes/bookRoutes')(nav);
 
 /**
  * Setting Application to use Template engine
@@ -32,17 +42,7 @@ const mainRouter = express.Router();
 mainRouter.route('/')
   .get((req, res) => {
     // res.sendFile(path.join(__dirname, 'views', 'index_from_bootstrap.html'));
-    res.render('index',
-      {
-        nav: [{
-          title: 'Books',
-          link: 'books'
-        },
-        {
-          title: 'Authors',
-          link: 'authors'
-        }]
-      });
+    res.render('index', nav);
   });
 
 app.use('/', mainRouter);
@@ -52,7 +52,7 @@ app.use('/books', bookRoute);
 Restfull End points
 */
 app.get('/employees', (req, res) => {
-  res.send(`list of employees [${process.env.employee1}, ${process.env.employee2}]...`);
+  res.send(`List of my employees [${process.env.employee1}, ${process.env.employee2}]...`);
 });
 
 /**
