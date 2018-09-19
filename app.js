@@ -3,8 +3,8 @@ const chalk = require('chalk');
 const debug = require('debug')('myapplication');
 const morgan = require('morgan');
 const path = require('path');
-const bookRoute = require('./src/routes/bookRoutes');
-// const bookRouter = require(path.join(__dirname, 'src', 'routes', 'bookRoute.js'));
+const nav = require('./src/config/nav');
+const bookRoutes = require('./src/routes/bookRoutes')(nav);
 
 /**
  * Application instance
@@ -34,19 +34,12 @@ mainRouter.route('/')
     // res.sendFile(path.join(__dirname, 'views', 'index_from_bootstrap.html'));
     res.render('index',
       {
-        nav: [{
-          title: 'Books',
-          link: 'books'
-        },
-        {
-          title: 'Authors',
-          link: 'authors'
-        }]
+        nav
       });
   });
 
 app.use('/', mainRouter);
-app.use('/books', bookRoute);
+app.use('/books', bookRoutes);
 
 /*
 Restfull End points
