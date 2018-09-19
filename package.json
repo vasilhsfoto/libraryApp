@@ -29,6 +29,7 @@
   "nodemonConfig": {
     "watch": [
       "app.js",
+      "src/routes/bookRoutes.js",
       "views/index.html"
     ],
     "ignore": [
