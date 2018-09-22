@@ -18,6 +18,7 @@
     "express": "^4.15.2",
     "jquery": "^3.3.1",
     "morgan": "^1.9.0",
+    "mssql": "^4.2.1",
     "popper.js": "^1.14.4"
   },
   "devDependencies": {
@@ -29,7 +30,8 @@
   "nodemonConfig": {
     "watch": [
       "app.js",
-      "src/routes/bookRoutes.js",
+      "src/routes/bookRoute.js",
+      "src/routes/mainRoute.js",
       "views/index.html"
     ],
     "ignore": [
@@ -38,9 +40,7 @@
     "delay": "2500",
     "env": {
       "NODE_ENV": "development",
-      "PORT": 4000,
-      "employee1": "Alex",
-      "employee2": "Vassilis"
+      "PORT": 4000
     }
   }
 }
