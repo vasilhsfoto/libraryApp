@@ -12,17 +12,22 @@ const config = {
       link: 'authors'
     }],
   development: {
-    user: 'library',
-    password: 'xxx',
-    server: 'pslibrarydemo.database.windows.net', // You can use 'localhost\\instance' to connect to named instance
-    database: 'PSLibrary',
+    mongo: {
+      url: 'mongodb://127.0.0.1:27017',
+      dbName: 'library'
+    },
+    msql: {
+      user: 'library',
+      password: 'xxx',
+      server: 'pslibrarydemo.database.windows.net', // You can use 'localhost\\instance' to connect to named instance
+      database: 'PSLibrary',
 
-    options: {
-      encrypt: true // Use this if you're on Windows Azure
+      options: {
+        encrypt: true // Use this if you're on Windows Azure
+      }
     }
   },
   production: {
-
   }
 };
 

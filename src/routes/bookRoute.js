@@ -1,14 +1,11 @@
 const express = require('express');
-const sql = require('mssql');
-const debug = require('debug')('library:bookRoutes');
+const { MongoClient, ObjectID } = require('mongodb');
+const debug = require('debug')('library:bookRoute');
 const ErrorResponse = require('../models/errorResponse');
-
-const GET_ALL = 'select * from Books';
-const GET_BOOK_BY_ID = 'select * from Books where id = @bookId';
 
 // TODO: to make it right cuz books/01 are passed correctly
 // TODO: to make it OOP - e.g defining it within some class
-function getId(req) {
+function validateId(req) {
   const { id } = req.params;
   const parsedInt = Number.parseInt(id, 10);
   if (Number.isNaN(parsedInt)) {
@@ -17,15 +14,23 @@ function getId(req) {
   return id;
 }
 
-function getBookRoute(nav) {
+// TODO: to be part of a singleton class out of this file
+async function getCollectionReference(mongoConf, collectionName) {
+  const client = await MongoClient.connect(mongoConf.url);
+  const db = client.db(mongoConf.dbName);
+
+  return await db.collection(collectionName); // eslint-disable-line no-return-await
+}
+
+function getBookRoute(nav, mongoConf) {
+  debug('getBookRoute took a correct conf nav = %O and mongoCong = %O', nav, mongoConf);
   const bookRouter = express.Router();
 
   bookRouter.route('/')
     .get((req, res, next) => {
       const getAllBooks = async () => {
-        const sqlRequest = new sql.Request();
-        const { recordset: books } = await sqlRequest.query(GET_ALL);
-
+        const bookCollection = await getCollectionReference(mongoConf, 'book');
+        const books = await bookCollection.find({}).toArray();
         const objToInject = {
           title: 'books',
           nav,
@@ -39,14 +44,13 @@ function getBookRoute(nav) {
 
   bookRouter.route('/:id')
     .all((req, res, next) => {
-      const id = getId(req);
+      const id = validateId(req);
       const getBookById = async () => {
-        const sqlRequest = new sql.Request();
-        const { recordset } = await sqlRequest.input('bookId', sql.Int, id)
-          .query(GET_BOOK_BY_ID);
-        const [book] = recordset;
+        const bookCollection = await getCollectionReference(mongoConf, 'book');
+        const book = await bookCollection.findOne({ _id: new ObjectID(id) });
+        debug(`I get a book with id = ${id} and result is book = %O`, book);
         if (!book) {
-          throw new ErrorResponse('Not Found', 'Book with id = xxx not found', 404);
+          throw new ErrorResponse('Not Found', `Book with id = ${id} not found`, 404);
         }
         req.book = book;
         next();
