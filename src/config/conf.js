@@ -13,7 +13,7 @@ const config = {
     }],
   development: {
     user: 'library',
-    password: 'Amonra1314*',
+    password: 'xxx',
     server: 'pslibrarydemo.database.windows.net', // You can use 'localhost\\instance' to connect to named instance
     database: 'PSLibrary',
 
