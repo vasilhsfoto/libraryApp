@@ -17,8 +17,8 @@
     "ejs": "^2.6.1",
     "express": "^4.15.2",
     "jquery": "^3.3.1",
+    "mongodb": "^3.1.6",
     "morgan": "^1.9.0",
-    "mssql": "^4.2.1",
     "popper.js": "^1.14.4"
   },
   "devDependencies": {
@@ -32,6 +32,7 @@
       "app.js",
       "src/routes/bookRoute.js",
       "src/routes/mainRoute.js",
+      "src/routes/adminRoute.js",
       "views/index.html"
     ],
     "ignore": [
