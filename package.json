@@ -11,14 +11,18 @@
   "author": "Vassilis Fotopoulos",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "bootstrap": "^3.2.0",
     "chalk": "^2.4.1",
     "debug": "^3.1.0",
     "ejs": "^2.6.1",
     "express": "^4.15.2",
+    "express-session": "^1.15.6",
     "jquery": "^3.3.1",
     "mongodb": "^3.1.6",
     "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "popper.js": "^1.14.4"
   },
   "devDependencies": {
@@ -33,7 +37,11 @@
       "src/routes/bookRoute.js",
       "src/routes/mainRoute.js",
       "src/routes/adminRoute.js",
-      "views/index.html"
+      "src/routes/authRoute.js",
+      "src/routes/testRoute.js",
+      "views/index.html",
+      "src/config/strategies/localStrategy.js",
+      "src/config/passport.js"
     ],
     "ignore": [
       "public/*"

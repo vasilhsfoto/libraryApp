@@ -6,12 +6,12 @@
 		<title>Book List from Index.ejs template file</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<link href="css/styles.css" rel="stylesheet">
+		<link href="/css/styles.css" rel="stylesheet">
 	</head>
 
   <body>
@@ -94,16 +94,13 @@
           <!--/stories-->
           <div class="row">
             <div class="col-md-2 col-sm-3 text-center">
-              SignUp!!! Or <a href="/auth/signin">Signin</a>
-            <form name="SignUpForm", action="/auth/signUp", method="POST">
+              Signin Form
+            <form name="SigninForm", action="/auth/signin", method="POST">
               UserName:
               <input name="username", type="text", placeholder="user name">
               Password:
               <input name="password", type="text", placeholder="pass">
-              e-mail:
-              <input name="email", type="text", placeholder="@gmail.com">
-
-              <input type="submit" value="Sign Up!">
+              <input type="submit" value="Signin!">
             </form>
             </div>
           </div>
@@ -157,6 +154,6 @@
 </footer>
 	<!-- script references -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
 	</body>
 </html>
