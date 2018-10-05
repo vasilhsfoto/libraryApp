@@ -1,6 +1,7 @@
 const express = require('express');
-const { MongoClient, ObjectID } = require('mongodb');
+const { ObjectID } = require('mongodb');
 const debug = require('debug')('library:bookRoute');
+const MongoUtil = require('../persistence/utils');
 const ErrorResponse = require('../models/errorResponse');
 
 // TODO: to make it right cuz books/01 are passed correctly
@@ -14,22 +15,21 @@ function validateId(req) {
   return id;
 }
 
-// TODO: to be part of a singleton class out of this file
-async function getCollectionReference(mongoConf, collectionName) {
-  const client = await MongoClient.connect(mongoConf.url);
-  const db = client.db(mongoConf.dbName);
-
-  return await db.collection(collectionName); // eslint-disable-line no-return-await
-}
-
 function getBookRoute(nav, mongoConf) {
-  debug('getBookRoute took a correct conf nav = %O and mongoCong = %O', nav, mongoConf);
   const bookRouter = express.Router();
+
+  bookRouter.use((req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.redirect('/');
+    }
+  });
 
   bookRouter.route('/')
     .get((req, res, next) => {
       const getAllBooks = async () => {
-        const bookCollection = await getCollectionReference(mongoConf, 'book');
+        const bookCollection = await MongoUtil.getCollectionReference(mongoConf, 'book');
         const books = await bookCollection.find({}).toArray();
         const objToInject = {
           title: 'books',
@@ -46,7 +46,7 @@ function getBookRoute(nav, mongoConf) {
     .all((req, res, next) => {
       const id = validateId(req);
       const getBookById = async () => {
-        const bookCollection = await getCollectionReference(mongoConf, 'book');
+        const bookCollection = await MongoUtil.getCollectionReference(mongoConf, 'book');
         const book = await bookCollection.findOne({ _id: new ObjectID(id) });
         debug(`I get a book with id = ${id} and result is book = %O`, book);
         if (!book) {

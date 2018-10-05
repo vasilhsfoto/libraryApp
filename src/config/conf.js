@@ -12,6 +12,9 @@ const config = {
       link: 'authors'
     }],
   development: {
+    session: {
+      secret: 'Library'
+    },
     mongo: {
       url: 'mongodb://127.0.0.1:27017',
       dbName: 'library'
@@ -28,6 +31,10 @@ const config = {
     }
   },
   production: {
+    session: {
+      secret: 'Library',
+      cookie: { secure: true }
+    }
   }
 };
 
