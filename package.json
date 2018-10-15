@@ -11,6 +11,7 @@
   "author": "Vassilis Fotopoulos",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^3.2.0",
     "chalk": "^2.4.1",
@@ -23,7 +24,8 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "popper.js": "^1.14.4"
+    "popper.js": "^1.14.4",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "eslint": "^5.5.0",
@@ -39,6 +41,7 @@
       "src/routes/adminRoute.js",
       "src/routes/authRoute.js",
       "src/routes/testRoute.js",
+      "src/controllers/bookController.js",
       "views/index.html",
       "src/config/strategies/localStrategy.js",
       "src/config/passport.js"

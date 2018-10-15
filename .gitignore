@@ -1,7 +1,7 @@
 node_modules
 build
 npm-debug.log
+goodReadBook-example.json
 .env
 *.log
 .DS_Store
-xxx.js

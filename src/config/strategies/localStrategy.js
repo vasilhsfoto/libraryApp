@@ -1,7 +1,7 @@
 const passport = require('passport');
 const { Strategy } = require('passport-local');
 const debug = require('debug')('library:local-strategy');
-const MongoUtil = require('../../persistence/utils');
+const mongoDBServiceMeth = require('../../services/mongoDBService');
 
 const stategyConf = {
   usernameField: 'username',
@@ -12,13 +12,14 @@ const stategyConf = {
 
 function configureLocalStrategy(mongoConf) {
   debug('passport is configured its local-strategy');
+  const mongoDBService = mongoDBServiceMeth(mongoConf);
+
   passport.use(new Strategy(stategyConf,
     (req, username, password, done) => {
       (async () => {
         try {
-          const userCollection = await MongoUtil.getCollectionReference(mongoConf, 'user');
-          const user = await userCollection.findOne({ username });
-
+          debug('local strategy will run authentication logic');
+          const user = await mongoDBService.getUserByUsername(username);
           if (!user) {
             return done(null, false, { message: 'user account does not exist' });
           }

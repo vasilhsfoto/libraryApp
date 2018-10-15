@@ -12,11 +12,11 @@ debug(`Server started with env = ${env}`);
 // My imports
 const conf = require('./src/config/conf');
 const ErrorResponse = require('./src/models/errorResponse');
-const mainRoute = require('./src/routes/mainRoute')(conf.nav);
-const bookRoute = require('./src/routes/bookRoute')(conf.nav, conf[env].mongo);
-const authRoute = require('./src/routes/authRoute')(conf.nav, conf[env].mongo);
-const testRoute = require('./src/routes/testRoute')();
-const adminRoute = require('./src/routes/adminRoute')(conf[env].mongo);
+const mainRouter = require('./src/routes/mainRouter')(conf.nav);
+const bookRouter = require('./src/routes/bookRouter')(conf.nav, conf[env].mongo);
+const authRouter = require('./src/routes/authRouter')(conf.nav, conf[env].mongo);
+const testRouter = require('./src/routes/testRouter')();
+const adminRouter = require('./src/routes/adminRouter')(conf[env].mongo);
 
 /**
  * Application instance
@@ -55,13 +55,13 @@ app.use('/css', express.static(path.join(__dirname, 'node_modules', 'bootstrap',
 app.use('/js', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'js')));
 
 /**
- * configuring the routes
+ * configuring the routers
  */
-app.use('/', mainRoute);
-app.use('/books', bookRoute);
-app.use('/admin', adminRoute);
-app.use('/auth', authRoute);
-app.use('/test', testRoute);
+app.use('/', mainRouter);
+app.use('/books', bookRouter);
+app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
+app.use('/test', testRouter);
 
 /**
  * Configuring custom error handlers - Note: must be used at the very end
