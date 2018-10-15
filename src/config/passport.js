@@ -1,11 +1,12 @@
 const passport = require('passport');
 const debug = require('debug')('library:passport');
-const { ObjectID } = require('mongodb');
-const MongoUtil = require('../persistence/utils');
+const mongoDBServiceMeth = require('../services/mongoDBService');
 
 function passportConfig(app, mongoConf) {
   debug('passport is initialized');
   require('./strategies/localStrategy')(mongoConf);
+
+  const mongoDBService = mongoDBServiceMeth(mongoConf);
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -22,8 +23,7 @@ function passportConfig(app, mongoConf) {
 
     (async () => {
       try {
-        const userCollection = await MongoUtil.getCollectionReference(mongoConf, 'user');
-        const loggedInUser = await userCollection.findOne({ _id: new ObjectID(userId) });
+        const loggedInUser = await mongoDBService.getUserById(userId);
 
         if (!loggedInUser) {
           return done(null, false);
