@@ -4,21 +4,11 @@ const ErrorResponse = require('../models/errorResponse');
 const bookService = require('../services/goodReadsService');
 const mongoDBServiceMeth = require('../services/mongoDBService');
 
-function validateId(req) {
-  const { id } = req.params;
-  const parsedInt = Number.parseInt(id, 10);
-  if (Number.isNaN(parsedInt)) {
-    throw new ErrorResponse('Id is not an integer', 'provide a valid id for the book you are looking for', 400);
-  }
-  return id;
-}
-
 function bookController(nav, mongoConf) {
   const mongoDBService = mongoDBServiceMeth(mongoConf);
 
   function extractBook(req, res, next) {
-    const bookId = validateId(req);
-
+    const { id: bookId } = req.params;
     async function getBookByIdAsync() {
       const book = await mongoDBService.getBookById(bookId);
       debug(`I get a book with id = ${bookId} and result is book = %O`, book);
@@ -83,8 +73,11 @@ function bookController(nav, mongoConf) {
       });
   }
 
-  function deleteBookById(req, res, next) {
-    next(new ErrorResponse('API is not yet supported', '', 501));
+  function deleteBookById(req, res) {
+    // if in the same tick - all the errors are propagated to the first
+    // error method middleware. you don't need to do next(error);
+    // throw new ErrorResponse('API is not yet supported', '', 501);
+    throw new ErrorResponse('API is not yet supported', '', 501);
   }
 
   function createBook(req, res, next) {
